@@ -1,4 +1,4 @@
-pomodoriclient
+Pomodoriclient
 ==============
 
-A OSX pomodoro client that can fetch other users pomodo session state from a pomodoro server that can be found here: https://github.com/pbodsk/pomodoriserver
+Pomodoriclient is a OS X pomodoro client that can fetch other users pomodo session state from a pomodoro server. The server part can be found here: https://github.com/pbodsk/pomodoriserver
