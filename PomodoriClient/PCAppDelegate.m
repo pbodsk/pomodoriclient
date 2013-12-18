@@ -10,9 +10,12 @@
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import "PCSession.h"
 
+#define kDefaultPomodoTime 25*60
+#define kUrlString @"http://localhost:5000/update"
+
 @interface PCAppDelegate()
 @property (nonatomic, strong) NSArray *sessions;
-
+@property (nonatomic, strong) PCSession *currentUserSession;
 @end
 
 @implementation PCAppDelegate
@@ -21,13 +24,14 @@
 {
     // Insert code here to initialize your application
     self.sessions = [NSArray array];
+    self.currentUserSession = [[PCSession alloc]initWithUserName:@"Peter" status:PCSessionPomodoroStatusActive remainingTimeInSeconds:kDefaultPomodoTime group:@"JBMobile"];
 }
 
 - (IBAction)testServerConnection:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSString *url = @"http://localhost:5000/update";
-    NSDictionary *postBody = @{@"username": @"Peter", @"remainingtime" : @"24:00", @"status" : @"active", @"group" : @"JBMobile"};
+    NSString *url = kUrlString;
+    NSDictionary *postBody = [self.currentUserSession postDataAsDictionary];
     [manager POST:url parameters:postBody
     success:^(AFHTTPRequestOperation *operation, id responseObject){
         NSLog(@"success");
@@ -40,6 +44,7 @@
             [newSessions addObject:currentSession];
         }
         self.sessions = [NSArray arrayWithArray:newSessions];
+        NSLog(@"number of sessions: %li", (unsigned long)[self.sessions count]);
     }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"failure, error %@", error);
     }];
