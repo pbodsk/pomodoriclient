@@ -10,8 +10,8 @@
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import "PCSession.h"
 
-#define kDefaultPomodoTime 25*60
-#define kUrlString @"http://localhost:5000/update"
+static const NSInteger kDefaultPomodoTime = 25*60;
+static NSString *const kUrlString = @"http://localhost:5000/update";
 
 @interface PCAppDelegate()
 @property (nonatomic, strong) NSArray *sessions;
@@ -30,9 +30,8 @@
 - (IBAction)testServerConnection:(id)sender {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSString *url = kUrlString;
     NSDictionary *postBody = [self.currentUserSession postDataAsDictionary];
-    [manager POST:url parameters:postBody
+    [manager POST:kUrlString parameters:postBody
     success:^(AFHTTPRequestOperation *operation, id responseObject){
         NSLog(@"success");
         self.sessions = nil;
