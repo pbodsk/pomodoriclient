@@ -11,7 +11,8 @@
 #import "PCSession.h"
 
 static const NSInteger kDefaultPomodoTime = 25*60;
-static NSString *const kUrlString = @"http://localhost:5000/update";
+//static NSString *const kUrlString = @"http://localhost:5000/update";
+static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com/update";
 
 @interface PCAppDelegate()
 @property (nonatomic, strong) NSArray *sessions;
@@ -29,7 +30,8 @@ static NSString *const kUrlString = @"http://localhost:5000/update";
     self.usersTable.delegate = self;
     self.usersTable.dataSource = self;
     //TODO - get name remainingTime and group from preferences instead
-    self.currentUserSession = [[PCSession alloc]initWithUserName:@"Peter" status:PCSessionPomodoroStatusActive remainingTimeInSeconds:kDefaultPomodoTime group:@"JBMobile"];
+    NSString *userName = [[NSHost currentHost]name];
+    self.currentUserSession = [[PCSession alloc]initWithUserName:userName status:PCSessionPomodoroStatusActive remainingTimeInSeconds:kDefaultPomodoTime group:@"JBMobile"];
     [self.pauseButton setHidden:YES];
     [self displayRemainingTime];
     
@@ -94,12 +96,15 @@ static NSString *const kUrlString = @"http://localhost:5000/update";
 - (IBAction)startButtonTapped:(id)sender {
     [self.startButton setHidden:YES];
     [self.pauseButton setHidden:NO];
+    self.currentUserSession.status = PCSessionPomodoroStatusActive;
+    [self sendUserSessionToServer];
     [self startTimers];
 }
 
 - (IBAction)pauseButtonTapped:(id)sender {
     [self.startButton setHidden:NO];
     [self.pauseButton setHidden:YES];
+    //TODO only invalidate pomodoroTimer, let networkTimer continue
     [self invalidateTimers];
     self.currentUserSession.status = PCSessionPomodoroStatusPaused;
     [self sendUserSessionToServer];
