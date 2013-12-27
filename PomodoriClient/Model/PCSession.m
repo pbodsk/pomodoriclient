@@ -82,5 +82,20 @@
     return self.remainingTimeInSeconds <= 0;
 }
 
+- (NSString *)stringFromStatus {
+    NSString *returnString;
+    if(self.status == PCSessionPomodoroStatusActive){
+        returnString = @"Active";
+    }
+    
+    if(self.status == PCSessionPomodoroStatusPaused){
+        returnString = @"Paused";
+    }
+    
+    if(self.status == PCSessionPomodoroStatusDone){
+        returnString = @"Done";
+    }
+    return returnString;
+}
 
 @end

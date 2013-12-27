@@ -26,6 +26,8 @@ static NSString *const kUrlString = @"http://localhost:5000/update";
 {
     // Insert code here to initialize your application
     self.sessions = [NSArray array];
+    self.usersTable.delegate = self;
+    self.usersTable.dataSource = self;
     //TODO - get name remainingTime and group from preferences instead
     self.currentUserSession = [[PCSession alloc]initWithUserName:@"Peter" status:PCSessionPomodoroStatusActive remainingTimeInSeconds:kDefaultPomodoTime group:@"JBMobile"];
     [self.pauseButton setHidden:YES];
@@ -74,6 +76,7 @@ static NSString *const kUrlString = @"http://localhost:5000/update";
                   [newSessions addObject:currentSession];
               }
               self.sessions = [NSArray arrayWithArray:newSessions];
+              [self.usersTable reloadData];
               NSLog(@"number of sessions: %li", (unsigned long)[self.sessions count]);
           }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"failure, error %@", error);
@@ -86,7 +89,7 @@ static NSString *const kUrlString = @"http://localhost:5000/update";
     self.timerLabel.title = [self.currentUserSession remainingTimeAsPresentationString];
 }
 
-#pragma mark - Button mehods
+#pragma mark - Button methods
 
 - (IBAction)startButtonTapped:(id)sender {
     [self.startButton setHidden:YES];
@@ -111,4 +114,27 @@ static NSString *const kUrlString = @"http://localhost:5000/update";
     [self sendUserSessionToServer];
     [self displayRemainingTime];
 }
+
+#pragma mark - NSTableViewDataSource methods
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    return self.sessions.count;
+}
+
+- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    PCSession *sessionForRow = [self.sessions objectAtIndex:row];
+    if([tableColumn.identifier isEqualToString:@"userName"]){
+        return sessionForRow.userName;
+    }
+    
+    if([tableColumn.identifier isEqualToString:@"remainingTime"]){
+        return [sessionForRow remainingTimeAsPresentationString];
+    }
+
+    if([tableColumn.identifier isEqualToString:@"status"]){
+        return [sessionForRow stringFromStatus];
+    }
+    return @"";
+}
+
+#pragma mark - NSTableViewDelegate methods
 @end

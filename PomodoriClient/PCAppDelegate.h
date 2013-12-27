@@ -8,14 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PCAppDelegate : NSObject <NSApplicationDelegate>
+@interface PCAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
-- (IBAction)testServerConnection:(id)sender;
 @property (weak) IBOutlet NSButton *startButton;
 @property (weak) IBOutlet NSButton *pauseButton;
 @property (weak) IBOutlet NSButton *resetButton;
 @property (weak) IBOutlet NSTextFieldCell *timerLabel;
+@property (weak) IBOutlet NSTableView *usersTable;
+
 - (IBAction)startButtonTapped:(id)sender;
 - (IBAction)pauseButtonTapped:(id)sender;
 - (IBAction)resetButtonTapped:(id)sender;

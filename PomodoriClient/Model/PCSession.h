@@ -27,5 +27,5 @@ typedef NS_ENUM(NSInteger, PCSessionPomodoroStatus) {
 - (NSString *)remainingTimeAsPresentationString;
 - (void)updateRemainingTime;
 - (BOOL)sessionHasEnded;
-
+- (NSString *)stringFromStatus;
 @end
