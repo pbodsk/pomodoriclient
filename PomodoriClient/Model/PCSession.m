@@ -72,5 +72,15 @@
     return [NSString stringWithFormat:@"%02li:%02li", (long)minutes, (long)seconds];    
 }
 
+- (void)updateRemainingTime {
+    if(self.remainingTimeInSeconds > 0){
+        self.remainingTimeInSeconds -= 1;
+    }
+}
+
+- (BOOL)sessionHasEnded {
+    return self.remainingTimeInSeconds <= 0;
+}
+
 
 @end

@@ -25,5 +25,7 @@ typedef NS_ENUM(NSInteger, PCSessionPomodoroStatus) {
 + (instancetype)newFromJSON:(NSDictionary *)json;
 - (NSDictionary *)postDataAsDictionary;
 - (NSString *)remainingTimeAsPresentationString;
+- (void)updateRemainingTime;
+- (BOOL)sessionHasEnded;
 
 @end
