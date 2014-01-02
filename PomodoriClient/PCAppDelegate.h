@@ -20,4 +20,5 @@
 - (IBAction)startButtonTapped:(id)sender;
 - (IBAction)pauseButtonTapped:(id)sender;
 - (IBAction)resetButtonTapped:(id)sender;
+- (IBAction)showPreferencePanel:(id)sender;
 @end

@@ -9,9 +9,10 @@
 #import "PCAppDelegate.h"
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import "PCSession.h"
+#import "PCPreferenceWindowController.h"
 
-//static const NSInteger kDefaultPomodoTime = 25*60;
-static const NSInteger kDefaultPomodoTime = 30  ;
+static const NSInteger kDefaultPomodoTime = 25*60;
+//static const NSInteger kDefaultPomodoTime = 30  ;
 //static NSString *const kUrlString = @"http://localhost:5000/update";
 static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com/update";
 
@@ -20,6 +21,7 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
 @property (nonatomic, strong) PCSession *currentUserSession;
 @property (nonatomic, strong) NSTimer *pomodoroTimer;
 @property (nonatomic, strong) NSTimer *networkTimer;
+@property (nonatomic, strong) PCPreferenceWindowController *preferenceWindowController;
 @end
 
 @implementation PCAppDelegate
@@ -158,6 +160,15 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
     pomodoroDoneNotification.informativeText = @"Well done, your pomodoro session is done. Time for a quick break";
     pomodoroDoneNotification.soundName = NSUserNotificationDefaultSoundName;
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:pomodoroDoneNotification];
+}
+
+#pragma mark - Preference view handling
+- (IBAction)showPreferencePanel:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    if (! self.preferenceWindowController) {
+        self.preferenceWindowController = [[PCPreferenceWindowController alloc]init];
+    }
+    [self.preferenceWindowController showWindow:self];
 }
 
 @end

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		59C7F942B39E4BCF9E1E797D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 098FA76BFF7843E0807F2E8F /* libPods.a */; };
+		AD3CC2B11875FBE3008C2BEC /* PCPreferenceWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD3CC2AF1875FBE3008C2BEC /* PCPreferenceWindowController.m */; };
+		AD3CC2B21875FBE3008C2BEC /* PCPreferenceWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD3CC2B01875FBE3008C2BEC /* PCPreferenceWindowController.xib */; };
 		AD5A761B185F99F600CC96EA /* PCSession.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A761A185F99F600CC96EA /* PCSession.m */; };
 		AD6D99E4185F8F2200E8C22B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD6D99E3185F8F2200E8C22B /* Cocoa.framework */; };
 		AD6D99EE185F8F2200E8C22B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AD6D99EC185F8F2200E8C22B /* InfoPlist.strings */; };
@@ -20,6 +22,9 @@
 /* Begin PBXFileReference section */
 		098FA76BFF7843E0807F2E8F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A5BC11285B843CAB0CF04A0 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		AD3CC2AE1875FBE3008C2BEC /* PCPreferenceWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PCPreferenceWindowController.h; path = View/PCPreferenceWindowController.h; sourceTree = "<group>"; };
+		AD3CC2AF1875FBE3008C2BEC /* PCPreferenceWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCPreferenceWindowController.m; path = View/PCPreferenceWindowController.m; sourceTree = "<group>"; };
+		AD3CC2B01875FBE3008C2BEC /* PCPreferenceWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PCPreferenceWindowController.xib; path = View/PCPreferenceWindowController.xib; sourceTree = "<group>"; };
 		AD5A7619185F99F600CC96EA /* PCSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PCSession.h; path = Model/PCSession.h; sourceTree = "<group>"; };
 		AD5A761A185F99F600CC96EA /* PCSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCSession.m; path = Model/PCSession.m; sourceTree = "<group>"; };
 		AD6D99E0185F8F2200E8C22B /* PomodoriClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PomodoriClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,6 +55,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD3CC2AD1875FB50008C2BEC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AD3CC2AE1875FBE3008C2BEC /* PCPreferenceWindowController.h */,
+				AD3CC2AF1875FBE3008C2BEC /* PCPreferenceWindowController.m */,
+				AD3CC2B01875FBE3008C2BEC /* PCPreferenceWindowController.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		AD5A7618185F99C100CC96EA /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +115,7 @@
 		AD6D99E9185F8F2200E8C22B /* PomodoriClient */ = {
 			isa = PBXGroup;
 			children = (
+				AD3CC2AD1875FB50008C2BEC /* View */,
 				AD5A7618185F99C100CC96EA /* Model */,
 				AD6D99F5185F8F2200E8C22B /* PCAppDelegate.h */,
 				AD6D99F6185F8F2200E8C22B /* PCAppDelegate.m */,
@@ -178,6 +194,7 @@
 				AD6D99EE185F8F2200E8C22B /* InfoPlist.strings in Resources */,
 				AD6D99F4185F8F2200E8C22B /* Credits.rtf in Resources */,
 				AD6D99FA185F8F2200E8C22B /* MainMenu.xib in Resources */,
+				AD3CC2B21875FBE3008C2BEC /* PCPreferenceWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +241,7 @@
 				AD6D99F0185F8F2200E8C22B /* main.m in Sources */,
 				AD6D99F7185F8F2200E8C22B /* PCAppDelegate.m in Sources */,
 				AD5A761B185F99F600CC96EA /* PCSession.m in Sources */,
+				AD3CC2B11875FBE3008C2BEC /* PCPreferenceWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
