@@ -11,7 +11,7 @@
 #import "PCSession.h"
 
 //static const NSInteger kDefaultPomodoTime = 25*60;
-static const NSInteger kDefaultPomodoTime = 10  ;
+static const NSInteger kDefaultPomodoTime = 30  ;
 //static NSString *const kUrlString = @"http://localhost:5000/update";
 static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com/update";
 
@@ -39,15 +39,21 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
 
 #pragma mark - Timer logic
 - (void)startTimers {
+    //just to be sure
+    [self invalidateAllTimers];
     self.pomodoroTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updatePomodoriTimer) userInfo:nil repeats:YES];
     self.networkTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(sendUserSessionToServer) userInfo:nil repeats:YES];
 }
 
-- (void)invalidateTimers {
-    [self.pomodoroTimer invalidate];
-    self.pomodoroTimer = nil;
+- (void)invalidateAllTimers {
+    [self invalidatePomodoroTimer];
     [self.networkTimer invalidate];
     self.networkTimer = nil;
+}
+
+- (void)invalidatePomodoroTimer {
+    [self.pomodoroTimer invalidate];
+    self.pomodoroTimer = nil;
 }
 
 #pragma mark - Methods to be called by timers
@@ -57,7 +63,7 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
     if([self.currentUserSession sessionHasEnded]){
         self.currentUserSession.status = PCSessionPomodoroStatusDone;
         [self sendUserSessionToServer];
-        [self invalidateTimers];
+        [self invalidateAllTimers];
         [self postPomodoroDoneNotification];
         [self.pauseButton setEnabled:NO];
     }
@@ -106,7 +112,7 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
     [self.startButton setHidden:NO];
     [self.pauseButton setHidden:YES];
     //TODO only invalidate pomodoroTimer, let networkTimer continue
-    [self invalidateTimers];
+    [self invalidatePomodoroTimer];
     self.currentUserSession.status = PCSessionPomodoroStatusPaused;
     [self sendUserSessionToServer];
 }
@@ -115,7 +121,7 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
     [self.startButton setHidden:NO];
     [self.pauseButton setHidden:YES];
     [self.pauseButton setEnabled:YES];
-    [self invalidateTimers];
+    [self invalidateAllTimers];
     self.currentUserSession.remainingTimeInSeconds = kDefaultPomodoTime;
     self.currentUserSession.status = PCSessionPomodoroStatusDone;
     [self sendUserSessionToServer];
