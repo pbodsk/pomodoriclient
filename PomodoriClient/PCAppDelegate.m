@@ -10,7 +10,8 @@
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import "PCSession.h"
 
-static const NSInteger kDefaultPomodoTime = 25*60;
+//static const NSInteger kDefaultPomodoTime = 25*60;
+static const NSInteger kDefaultPomodoTime = 10  ;
 //static NSString *const kUrlString = @"http://localhost:5000/update";
 static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com/update";
 
@@ -25,11 +26,10 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    // Insert code here to initialize your application
     self.sessions = [NSArray array];
     self.usersTable.delegate = self;
     self.usersTable.dataSource = self;
-    //TODO - get name remainingTime and group from preferences instead
+    //TODO - get name, remainingTime and group from preferences instead
     NSString *userName = [[NSHost currentHost]name];
     self.currentUserSession = [[PCSession alloc]initWithUserName:userName status:PCSessionPomodoroStatusActive remainingTimeInSeconds:kDefaultPomodoTime group:@"JBMobile"];
     [self.pauseButton setHidden:YES];
@@ -58,7 +58,8 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
         self.currentUserSession.status = PCSessionPomodoroStatusDone;
         [self sendUserSessionToServer];
         [self invalidateTimers];
-        //TODO post notification that session has ended
+        [self postPomodoroDoneNotification];
+        [self.pauseButton setEnabled:NO];
     }
 }
 
@@ -113,6 +114,7 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
 - (IBAction)resetButtonTapped:(id)sender {
     [self.startButton setHidden:NO];
     [self.pauseButton setHidden:YES];
+    [self.pauseButton setEnabled:YES];
     [self invalidateTimers];
     self.currentUserSession.remainingTimeInSeconds = kDefaultPomodoTime;
     self.currentUserSession.status = PCSessionPomodoroStatusDone;
@@ -142,4 +144,14 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
 }
 
 #pragma mark - NSTableViewDelegate methods
+
+#pragma mark - Notifications
+- (void)postPomodoroDoneNotification {
+    NSUserNotification *pomodoroDoneNotification = [NSUserNotification new];
+    pomodoroDoneNotification.title = @"Time's up";
+    pomodoroDoneNotification.informativeText = @"Well done, your pomodoro session is done. Time for a quick break";
+    pomodoroDoneNotification.soundName = NSUserNotificationDefaultSoundName;
+    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:pomodoroDoneNotification];
+}
+
 @end
