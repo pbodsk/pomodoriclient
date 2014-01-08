@@ -11,7 +11,6 @@
 #import "PCSession.h"
 #import "PCPreferenceWindowController.h"
 
-static const NSInteger kDefaultPomodoTime = 25*60;
 //static const NSInteger kDefaultPomodoTime = 30  ;
 //static NSString *const kUrlString = @"http://localhost:5000/update";
 static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com/update";
@@ -26,14 +25,28 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
 
 @implementation PCAppDelegate
 
++ (void)initialize {
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:PCUserNamePrefKey];
+    if(! userName){
+        NSMutableDictionary *userPreferences = [NSMutableDictionary dictionary];
+        [userPreferences setObject:[[NSHost currentHost]name] forKey:PCUserNamePrefKey];
+        [userPreferences setObject:@25 forKey:PCPomodoroLengthPrefKey];
+        [userPreferences setObject:@"JBMobile" forKey:PCGroupNamePrefKey];
+        
+        [[NSUserDefaults standardUserDefaults]registerDefaults:userPreferences];        
+    }
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.sessions = [NSArray array];
     self.usersTable.delegate = self;
     self.usersTable.dataSource = self;
     //TODO - get name, remainingTime and group from preferences instead
-    NSString *userName = [[NSHost currentHost]name];
-    self.currentUserSession = [[PCSession alloc]initWithUserName:userName status:PCSessionPomodoroStatusActive remainingTimeInSeconds:kDefaultPomodoTime group:@"JBMobile"];
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:PCUserNamePrefKey];
+    NSString *groupName = [[NSUserDefaults standardUserDefaults] objectForKey:PCGroupNamePrefKey];
+    NSInteger remainingTimeInSeconds = [self remainingTimeInSeconds];
+    self.currentUserSession = [[PCSession alloc]initWithUserName:userName status:PCSessionPomodoroStatusActive remainingTimeInSeconds:remainingTimeInSeconds group:groupName];
     [self.pauseButton setHidden:YES];
     [self displayRemainingTime];
     
@@ -124,7 +137,7 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
     [self.pauseButton setHidden:YES];
     [self.pauseButton setEnabled:YES];
     [self invalidateAllTimers];
-    self.currentUserSession.remainingTimeInSeconds = kDefaultPomodoTime;
+    self.currentUserSession.remainingTimeInSeconds = [self remainingTimeInSeconds];
     self.currentUserSession.status = PCSessionPomodoroStatusDone;
     [self sendUserSessionToServer];
     [self displayRemainingTime];
@@ -169,6 +182,11 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
         self.preferenceWindowController = [[PCPreferenceWindowController alloc]init];
     }
     [self.preferenceWindowController showWindow:self];
+}
+
+#pragma mark - Prefence mapping
+- (NSInteger) remainingTimeInSeconds {
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:PCPomodoroLengthPrefKey] integerValue] * 60;
 }
 
 @end

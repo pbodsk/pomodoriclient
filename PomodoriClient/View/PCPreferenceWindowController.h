@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+extern NSString * const PCUserNamePrefKey;
+extern NSString * const PCPomodoroLengthPrefKey;
+extern NSString * const PCGroupNamePrefKey;
+
 @interface PCPreferenceWindowController : NSWindowController
 @property (strong) IBOutlet NSTextFieldCell *userNameTextField;
 @property (strong) IBOutlet NSTextFieldCell *pomodoroLengthTextField;
