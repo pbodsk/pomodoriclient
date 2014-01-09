@@ -11,6 +11,7 @@
 extern NSString * const PCUserNamePrefKey;
 extern NSString * const PCPomodoroLengthPrefKey;
 extern NSString * const PCGroupNamePrefKey;
+extern NSString * const PC_SETTINGS_WAS_UPDATED_NOTIFICATION;
 
 @interface PCPreferenceWindowController : NSWindowController
 @property (strong) IBOutlet NSTextFieldCell *userNameTextField;

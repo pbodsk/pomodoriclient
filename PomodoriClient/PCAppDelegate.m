@@ -13,7 +13,8 @@
 
 //static const NSInteger kDefaultPomodoTime = 30  ;
 //static NSString *const kUrlString = @"http://localhost:5000/update";
-static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com/update";
+static NSString *const kUrlUpdateString = @"http://limitless-island-2966.herokuapp.com/update";
+static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokuapp.com/remove";
 
 @interface PCAppDelegate()
 @property (nonatomic, strong) NSArray *sessions;
@@ -42,14 +43,13 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
     self.sessions = [NSArray array];
     self.usersTable.delegate = self;
     self.usersTable.dataSource = self;
-    //TODO - get name, remainingTime and group from preferences instead
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:PCUserNamePrefKey];
     NSString *groupName = [[NSUserDefaults standardUserDefaults] objectForKey:PCGroupNamePrefKey];
     NSInteger remainingTimeInSeconds = [self remainingTimeInSeconds];
     self.currentUserSession = [[PCSession alloc]initWithUserName:userName status:PCSessionPomodoroStatusActive remainingTimeInSeconds:remainingTimeInSeconds group:groupName];
     [self.pauseButton setHidden:YES];
     [self displayRemainingTime];
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userSettingsWasUpdated) name:PC_SETTINGS_WAS_UPDATED_NOTIFICATION object:nil];
 }
 
 #pragma mark - Timer logic
@@ -88,7 +88,7 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
     NSLog(@"%s", __PRETTY_FUNCTION__);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *postBody = [self.currentUserSession postDataAsDictionary];
-    [manager POST:kUrlString parameters:postBody
+    [manager POST:kUrlUpdateString parameters:postBody
           success:^(AFHTTPRequestOperation *operation, id responseObject){
               NSLog(@"success");
               self.sessions = nil;
@@ -104,8 +104,8 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
               NSLog(@"number of sessions: %li", (unsigned long)[self.sessions count]);
           }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"failure, error %@", error);
-          }];
-    
+          }
+     ];
 }
 
 #pragma mark - Presentation methods
@@ -184,7 +184,31 @@ static NSString *const kUrlString = @"http://limitless-island-2966.herokuapp.com
     [self.preferenceWindowController showWindow:self];
 }
 
-#pragma mark - Prefence mapping
+#pragma mark - Prefence methods
+- (void)userSettingsWasUpdated {
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:PCUserNamePrefKey];
+    NSString *groupName = [[NSUserDefaults standardUserDefaults] objectForKey:PCGroupNamePrefKey];
+    if(![userName isEqualToString:self.currentUserSession.userName]){
+        [self removeOldUserNameFromServer];
+    }
+    self.currentUserSession.userName = userName;
+    self.currentUserSession.group = groupName;
+}
+
+- (void)removeOldUserNameFromServer {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *postBody = [self.currentUserSession postDataAsDictionary];
+    [manager POST:kUrlRemoveString parameters:postBody
+          success:^(AFHTTPRequestOperation *operation, id responseObject){
+              NSLog(@"success");
+              [self.usersTable reloadData];
+          }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"failure, error %@", error);
+          }
+     ];
+}
+
 - (NSInteger) remainingTimeInSeconds {
     return [[[NSUserDefaults standardUserDefaults] objectForKey:PCPomodoroLengthPrefKey] integerValue] * 60;
 }

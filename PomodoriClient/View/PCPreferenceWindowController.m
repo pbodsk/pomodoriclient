@@ -11,6 +11,7 @@
 NSString * const PCUserNamePrefKey = @"PCUserNamePrefKey";
 NSString * const PCPomodoroLengthPrefKey = @"PCPomodoroLengthPrefKey";
 NSString * const PCGroupNamePrefKey = @"PCGroupNamePrefKey";
+NSString * const PC_SETTINGS_WAS_UPDATED_NOTIFICATION = @"PC_SETTINGS_WAS_UPDATED_NOTIFICATION";
 
 @interface PCPreferenceWindowController ()
 @property (nonatomic, strong) NSString *userName;
@@ -46,6 +47,7 @@ NSString * const PCGroupNamePrefKey = @"PCGroupNamePrefKey";
     [[NSUserDefaults standardUserDefaults] setObject:self.userName forKey:PCUserNamePrefKey];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:self.pomodoroLength] forKey:PCPomodoroLengthPrefKey];
     [[NSUserDefaults standardUserDefaults] setObject:self.groupName forKey:PCGroupNamePrefKey];
+    [[NSNotificationCenter defaultCenter]postNotificationName:PC_SETTINGS_WAS_UPDATED_NOTIFICATION object:nil];
 }
 
 - (IBAction)stepperAction:(id)sender {
