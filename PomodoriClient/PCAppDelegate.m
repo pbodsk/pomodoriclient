@@ -33,7 +33,6 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
         [userPreferences setObject:[[NSHost currentHost]name] forKey:PCUserNamePrefKey];
         [userPreferences setObject:@25 forKey:PCPomodoroLengthPrefKey];
         [userPreferences setObject:@"JBMobile" forKey:PCGroupNamePrefKey];
-        
         [[NSUserDefaults standardUserDefaults]registerDefaults:userPreferences];        
     }
 }
@@ -45,7 +44,7 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
     self.usersTable.dataSource = self;
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:PCUserNamePrefKey];
     NSString *groupName = [[NSUserDefaults standardUserDefaults] objectForKey:PCGroupNamePrefKey];
-    NSInteger remainingTimeInSeconds = [self remainingTimeInSeconds];
+    NSInteger remainingTimeInSeconds = [self remainingTimeInSecondsFromPreferences];
     self.currentUserSession = [[PCSession alloc]initWithUserName:userName status:PCSessionPomodoroStatusActive remainingTimeInSeconds:remainingTimeInSeconds group:groupName];
     [self.pauseButton setHidden:YES];
     [self displayRemainingTime];
@@ -80,7 +79,10 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
         [self sendUserSessionToServer];
         [self invalidateAllTimers];
         [self postPomodoroDoneNotification];
-        [self.pauseButton setEnabled:NO];
+        [self.pauseButton setHidden:YES];
+        [self.startButton setHidden:NO];
+        self.currentUserSession.remainingTimeInSeconds = [self remainingTimeInSecondsFromPreferences];
+        [self displayRemainingTime];
     }
 }
 
@@ -137,7 +139,7 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
     [self.pauseButton setHidden:YES];
     [self.pauseButton setEnabled:YES];
     [self invalidateAllTimers];
-    self.currentUserSession.remainingTimeInSeconds = [self remainingTimeInSeconds];
+    self.currentUserSession.remainingTimeInSeconds = [self remainingTimeInSecondsFromPreferences];
     self.currentUserSession.status = PCSessionPomodoroStatusDone;
     [self sendUserSessionToServer];
     [self displayRemainingTime];
@@ -209,7 +211,7 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
      ];
 }
 
-- (NSInteger) remainingTimeInSeconds {
+- (NSInteger) remainingTimeInSecondsFromPreferences {
     return [[[NSUserDefaults standardUserDefaults] objectForKey:PCPomodoroLengthPrefKey] integerValue] * 60;
 }
 
