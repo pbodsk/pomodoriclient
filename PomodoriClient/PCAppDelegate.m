@@ -13,6 +13,7 @@
 
 //static const NSInteger kDefaultPomodoTime = 30  ;
 //static NSString *const kUrlString = @"http://localhost:5000/update";
+static NSString *const kUrlFetchString = @"http://limitless-island-2966.herokuapp.com/fetch";
 static NSString *const kUrlUpdateString = @"http://limitless-island-2966.herokuapp.com/update";
 static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokuapp.com/remove";
 
@@ -20,7 +21,8 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
 @property (nonatomic, strong) NSArray *sessions;
 @property (nonatomic, strong) PCSession *currentUserSession;
 @property (nonatomic, strong) NSTimer *pomodoroTimer;
-@property (nonatomic, strong) NSTimer *networkTimer;
+@property (nonatomic, strong) NSTimer *fetchSessionsTimer;
+@property (nonatomic, strong) NSTimer *updateTimer;
 @property (nonatomic, strong) PCPreferenceWindowController *preferenceWindowController;
 @end
 
@@ -49,25 +51,37 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
     [self.pauseButton setHidden:YES];
     [self displayRemainingTime];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userSettingsWasUpdated) name:PC_SETTINGS_WAS_UPDATED_NOTIFICATION object:nil];
+    [self fetchUserSessions];
+    [self startFetchSessionsTimer];
 }
 
 #pragma mark - Timer logic
+- (void)startFetchSessionsTimer {
+    [self invalidateFetchSessionsTimer];
+    self.fetchSessionsTimer = [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(fetchUserSessions) userInfo:nil repeats:YES];
+}
+
 - (void)startTimers {
     //just to be sure
     [self invalidateAllTimers];
     self.pomodoroTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updatePomodoriTimer) userInfo:nil repeats:YES];
-    self.networkTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(sendUserSessionToServer) userInfo:nil repeats:YES];
+    self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(sendUserSessionToServer) userInfo:nil repeats:YES];
 }
 
 - (void)invalidateAllTimers {
     [self invalidatePomodoroTimer];
-    [self.networkTimer invalidate];
-    self.networkTimer = nil;
+    [self.updateTimer invalidate];
+    self.updateTimer = nil;
 }
 
 - (void)invalidatePomodoroTimer {
     [self.pomodoroTimer invalidate];
     self.pomodoroTimer = nil;
+}
+
+- (void)invalidateFetchSessionsTimer {
+    [self.fetchSessionsTimer invalidate];
+    self.fetchSessionsTimer = nil;
 }
 
 #pragma mark - Methods to be called by timers
@@ -87,12 +101,25 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
 }
 
 - (void)sendUserSessionToServer {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+//    NSLog(@"%s", __PRETTY_FUNCTION__);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *postBody = [self.currentUserSession postDataAsDictionary];
     [manager POST:kUrlUpdateString parameters:postBody
           success:^(AFHTTPRequestOperation *operation, id responseObject){
-              NSLog(@"success");
+ //             NSLog(@"success");
+          }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+ //             NSLog(@"failure, error %@", error);
+          }
+     ];
+}
+
+- (void)fetchUserSessions {
+   // NSLog(@"%s", __PRETTY_FUNCTION__);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *group = @{@"group": self.currentUserSession.group};
+    [manager GET:kUrlFetchString parameters:group
+          success:^(AFHTTPRequestOperation *operation, id responseObject){
+     //         NSLog(@"success");
               self.sessions = nil;
               NSMutableArray *newSessions = [NSMutableArray new];
               NSArray *returnArray = (NSArray *)responseObject;
@@ -103,9 +130,9 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
               }
               self.sessions = [NSArray arrayWithArray:newSessions];
               [self.usersTable reloadData];
-              NSLog(@"number of sessions: %li", (unsigned long)[self.sessions count]);
+       //       NSLog(@"number of sessions: %li", (unsigned long)[self.sessions count]);
           }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"failure, error %@", error);
+         //     NSLog(@"failure, error %@", error);
           }
      ];
 }
