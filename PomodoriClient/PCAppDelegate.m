@@ -39,6 +39,7 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
     }
 }
 
+#pragma mark - Application lifecycle methods
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.sessions = [NSArray array];
@@ -55,6 +56,12 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
     [self startFetchSessionsTimer];
 }
 
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    [self invalidatePomodoroTimerAndUpdateTimer];
+    [self invalidateFetchSessionsTimer];
+    [self removeOldUserNameFromServer];
+}
+
 #pragma mark - Timer logic
 - (void)startFetchSessionsTimer {
     [self invalidateFetchSessionsTimer];
@@ -63,13 +70,17 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
 
 - (void)startTimers {
     //just to be sure
-    [self invalidateAllTimers];
+    [self invalidatePomodoroTimerAndUpdateTimer];
     self.pomodoroTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updatePomodoriTimer) userInfo:nil repeats:YES];
     self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(sendUserSessionToServer) userInfo:nil repeats:YES];
 }
 
-- (void)invalidateAllTimers {
+- (void)invalidatePomodoroTimerAndUpdateTimer {
     [self invalidatePomodoroTimer];
+    [self invalidateUpdateTimer];
+}
+
+- (void)invalidateUpdateTimer {
     [self.updateTimer invalidate];
     self.updateTimer = nil;
 }
@@ -91,7 +102,7 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
     if([self.currentUserSession sessionHasEnded]){
         self.currentUserSession.status = PCSessionPomodoroStatusDone;
         [self sendUserSessionToServer];
-        [self invalidateAllTimers];
+        [self invalidatePomodoroTimerAndUpdateTimer];
         [self postPomodoroDoneNotification];
         [self.pauseButton setHidden:YES];
         [self.startButton setHidden:NO];
@@ -165,7 +176,7 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
     [self.startButton setHidden:NO];
     [self.pauseButton setHidden:YES];
     [self.pauseButton setEnabled:YES];
-    [self invalidateAllTimers];
+    [self invalidatePomodoroTimerAndUpdateTimer];
     self.currentUserSession.remainingTimeInSeconds = [self remainingTimeInSecondsFromPreferences];
     self.currentUserSession.status = PCSessionPomodoroStatusDone;
     [self sendUserSessionToServer];
