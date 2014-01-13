@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		59C7F942B39E4BCF9E1E797D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 098FA76BFF7843E0807F2E8F /* libPods.a */; };
+		AD30E655188484060050A0F2 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = AD30E654188484060050A0F2 /* icon.icns */; };
+		AD30E66D188484DD0050A0F2 /* icon.iconset in Resources */ = {isa = PBXBuildFile; fileRef = AD30E66C188484DD0050A0F2 /* icon.iconset */; };
 		AD3CC2B11875FBE3008C2BEC /* PCPreferenceWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD3CC2AF1875FBE3008C2BEC /* PCPreferenceWindowController.m */; };
 		AD3CC2B21875FBE3008C2BEC /* PCPreferenceWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD3CC2B01875FBE3008C2BEC /* PCPreferenceWindowController.xib */; };
 		AD5A761B185F99F600CC96EA /* PCSession.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5A761A185F99F600CC96EA /* PCSession.m */; };
@@ -22,6 +24,8 @@
 /* Begin PBXFileReference section */
 		098FA76BFF7843E0807F2E8F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A5BC11285B843CAB0CF04A0 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		AD30E654188484060050A0F2 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		AD30E66C188484DD0050A0F2 /* icon.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = icon.iconset; sourceTree = "<group>"; };
 		AD3CC2AE1875FBE3008C2BEC /* PCPreferenceWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PCPreferenceWindowController.h; path = View/PCPreferenceWindowController.h; sourceTree = "<group>"; };
 		AD3CC2AF1875FBE3008C2BEC /* PCPreferenceWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCPreferenceWindowController.m; path = View/PCPreferenceWindowController.m; sourceTree = "<group>"; };
 		AD3CC2B01875FBE3008C2BEC /* PCPreferenceWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PCPreferenceWindowController.xib; path = View/PCPreferenceWindowController.xib; sourceTree = "<group>"; };
@@ -55,6 +59,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD30E66A188484DD0050A0F2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AD30E66B188484DD0050A0F2 /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		AD30E66B188484DD0050A0F2 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				AD30E66C188484DD0050A0F2 /* icon.iconset */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		AD3CC2AD1875FB50008C2BEC /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +97,7 @@
 		AD6D99D7185F8F2200E8C22B = {
 			isa = PBXGroup;
 			children = (
+				AD30E654188484060050A0F2 /* icon.icns */,
 				AD6D99E9185F8F2200E8C22B /* PomodoriClient */,
 				AD6D99E2185F8F2200E8C22B /* Frameworks */,
 				AD6D99E1185F8F2200E8C22B /* Products */,
@@ -115,6 +136,7 @@
 		AD6D99E9185F8F2200E8C22B /* PomodoriClient */ = {
 			isa = PBXGroup;
 			children = (
+				AD30E66A188484DD0050A0F2 /* Resources */,
 				AD3CC2AD1875FB50008C2BEC /* View */,
 				AD5A7618185F99C100CC96EA /* Model */,
 				AD6D99F5185F8F2200E8C22B /* PCAppDelegate.h */,
@@ -195,6 +217,8 @@
 				AD6D99F4185F8F2200E8C22B /* Credits.rtf in Resources */,
 				AD6D99FA185F8F2200E8C22B /* MainMenu.xib in Resources */,
 				AD3CC2B21875FBE3008C2BEC /* PCPreferenceWindowController.xib in Resources */,
+				AD30E655188484060050A0F2 /* icon.icns in Resources */,
+				AD30E66D188484DD0050A0F2 /* icon.iconset in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
