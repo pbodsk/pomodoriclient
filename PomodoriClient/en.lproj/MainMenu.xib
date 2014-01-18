@@ -212,7 +212,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{335, 390}, {580, 460}}</string>
 				<int key="NSWTFlags">1954021376</int>
-				<string key="NSWindowTitle">Pomodori Client</string>
+				<string key="NSWindowTitle">Pomodori</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
