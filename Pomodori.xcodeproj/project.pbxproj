@@ -31,15 +31,15 @@
 		AD3CC2B01875FBE3008C2BEC /* PCPreferenceWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PCPreferenceWindowController.xib; path = View/PCPreferenceWindowController.xib; sourceTree = "<group>"; };
 		AD5A7619185F99F600CC96EA /* PCSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PCSession.h; path = Model/PCSession.h; sourceTree = "<group>"; };
 		AD5A761A185F99F600CC96EA /* PCSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PCSession.m; path = Model/PCSession.m; sourceTree = "<group>"; };
-		AD6D99E0185F8F2200E8C22B /* PomodoriClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PomodoriClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD6D99E0185F8F2200E8C22B /* Pomodori.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomodori.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD6D99E3185F8F2200E8C22B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		AD6D99E6185F8F2200E8C22B /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		AD6D99E7185F8F2200E8C22B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		AD6D99E8185F8F2200E8C22B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		AD6D99EB185F8F2200E8C22B /* PomodoriClient-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PomodoriClient-Info.plist"; sourceTree = "<group>"; };
+		AD6D99EB185F8F2200E8C22B /* Pomodori-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Pomodori-Info.plist"; sourceTree = "<group>"; };
 		AD6D99ED185F8F2200E8C22B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AD6D99EF185F8F2200E8C22B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		AD6D99F1185F8F2200E8C22B /* PomodoriClient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PomodoriClient-Prefix.pch"; sourceTree = "<group>"; };
+		AD6D99F1185F8F2200E8C22B /* Pomodori-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Pomodori-Prefix.pch"; sourceTree = "<group>"; };
 		AD6D99F3185F8F2200E8C22B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		AD6D99F5185F8F2200E8C22B /* PCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PCAppDelegate.h; sourceTree = "<group>"; };
 		AD6D99F6185F8F2200E8C22B /* PCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCAppDelegate.m; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 		AD6D99E1185F8F2200E8C22B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AD6D99E0185F8F2200E8C22B /* PomodoriClient.app */,
+				AD6D99E0185F8F2200E8C22B /* Pomodori.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -150,10 +150,10 @@
 		AD6D99EA185F8F2200E8C22B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				AD6D99EB185F8F2200E8C22B /* PomodoriClient-Info.plist */,
+				AD6D99EB185F8F2200E8C22B /* Pomodori-Info.plist */,
 				AD6D99EC185F8F2200E8C22B /* InfoPlist.strings */,
 				AD6D99EF185F8F2200E8C22B /* main.m */,
-				AD6D99F1185F8F2200E8C22B /* PomodoriClient-Prefix.pch */,
+				AD6D99F1185F8F2200E8C22B /* Pomodori-Prefix.pch */,
 				AD6D99F2185F8F2200E8C22B /* Credits.rtf */,
 			);
 			name = "Supporting Files";
@@ -162,9 +162,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AD6D99DF185F8F2200E8C22B /* PomodoriClient */ = {
+		AD6D99DF185F8F2200E8C22B /* Pomodori */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AD6D99FD185F8F2200E8C22B /* Build configuration list for PBXNativeTarget "PomodoriClient" */;
+			buildConfigurationList = AD6D99FD185F8F2200E8C22B /* Build configuration list for PBXNativeTarget "Pomodori" */;
 			buildPhases = (
 				7711066BE5204836B5DE556B /* Check Pods Manifest.lock */,
 				AD6D99DC185F8F2200E8C22B /* Sources */,
@@ -176,9 +176,9 @@
 			);
 			dependencies = (
 			);
-			name = PomodoriClient;
+			name = Pomodori;
 			productName = PomodoriClient;
-			productReference = AD6D99E0185F8F2200E8C22B /* PomodoriClient.app */;
+			productReference = AD6D99E0185F8F2200E8C22B /* Pomodori.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -191,7 +191,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Peter Bødskov";
 			};
-			buildConfigurationList = AD6D99DB185F8F2200E8C22B /* Build configuration list for PBXProject "PomodoriClient" */;
+			buildConfigurationList = AD6D99DB185F8F2200E8C22B /* Build configuration list for PBXProject "Pomodori" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -203,7 +203,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AD6D99DF185F8F2200E8C22B /* PomodoriClient */,
+				AD6D99DF185F8F2200E8C22B /* Pomodori */,
 			);
 		};
 /* End PBXProject section */
@@ -364,9 +364,9 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PomodoriClient/PomodoriClient-Prefix.pch";
-				INFOPLIST_FILE = "PomodoriClient/PomodoriClient-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "PomodoriClient/Pomodori-Prefix.pch";
+				INFOPLIST_FILE = "PomodoriClient/Pomodori-Info.plist";
+				PRODUCT_NAME = Pomodori;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -377,9 +377,9 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PomodoriClient/PomodoriClient-Prefix.pch";
-				INFOPLIST_FILE = "PomodoriClient/PomodoriClient-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "PomodoriClient/Pomodori-Prefix.pch";
+				INFOPLIST_FILE = "PomodoriClient/Pomodori-Info.plist";
+				PRODUCT_NAME = Pomodori;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -387,7 +387,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AD6D99DB185F8F2200E8C22B /* Build configuration list for PBXProject "PomodoriClient" */ = {
+		AD6D99DB185F8F2200E8C22B /* Build configuration list for PBXProject "Pomodori" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AD6D99FB185F8F2200E8C22B /* Debug */,
@@ -396,7 +396,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AD6D99FD185F8F2200E8C22B /* Build configuration list for PBXNativeTarget "PomodoriClient" */ = {
+		AD6D99FD185F8F2200E8C22B /* Build configuration list for PBXNativeTarget "Pomodori" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AD6D99FE185F8F2200E8C22B /* Debug */,
