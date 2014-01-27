@@ -11,6 +11,7 @@
 extern NSString * const PCUserNamePrefKey;
 extern NSString * const PCPomodoroLengthPrefKey;
 extern NSString * const PCGroupNamePrefKey;
+extern NSString * const PCSendToServerPrefKey;
 extern NSString * const PC_SETTINGS_WAS_UPDATED_NOTIFICATION;
 
 @interface PCPreferenceWindowController : NSWindowController
@@ -18,7 +19,9 @@ extern NSString * const PC_SETTINGS_WAS_UPDATED_NOTIFICATION;
 @property (strong) IBOutlet NSTextFieldCell *pomodoroLengthTextField;
 @property (strong) IBOutlet NSStepper *pomodoroLengthStepper;
 @property (strong) IBOutlet NSTextFieldCell *groupTextField;
+@property (strong) IBOutlet NSButton *sendToServerSwitch;
 
 - (IBAction)stepperAction:(id)sender;
+- (IBAction)checkboxTapped:(id)sender;
 
 @end

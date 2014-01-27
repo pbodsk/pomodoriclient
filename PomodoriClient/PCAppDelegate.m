@@ -30,13 +30,20 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
 
 + (void)initialize {
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:PCUserNamePrefKey];
+    NSMutableDictionary *userPreferences = [NSMutableDictionary dictionary];
     if(! userName){
-        NSMutableDictionary *userPreferences = [NSMutableDictionary dictionary];
         [userPreferences setObject:[[NSHost currentHost]name] forKey:PCUserNamePrefKey];
         [userPreferences setObject:@25 forKey:PCPomodoroLengthPrefKey];
         [userPreferences setObject:@"JBMobile" forKey:PCGroupNamePrefKey];
-        [[NSUserDefaults standardUserDefaults]registerDefaults:userPreferences];        
+        [userPreferences setObject:[NSNumber numberWithBool:YES] forKey:PCSendToServerPrefKey];
     }
+    //extra check
+    NSNumber *boolNumber = [[NSUserDefaults standardUserDefaults]objectForKey:PCSendToServerPrefKey];
+    if(boolNumber == nil){
+        boolNumber = @YES;
+        [userPreferences setObject:boolNumber forKey:PCSendToServerPrefKey];
+    }
+    [[NSUserDefaults standardUserDefaults]registerDefaults:userPreferences]; 
 }
 
 #pragma mark - Application lifecycle methods
@@ -56,6 +63,7 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
     [self handleTermination];
 }
 
+#pragma mark - Startup and Shutdown methods
 - (void)handleTermination {
     [self invalidatePomodoroTimerAndUpdateTimer];
     [self invalidateFetchSessionsTimer];
@@ -75,7 +83,11 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
     [self displayRemainingTime];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userSettingsWasUpdated) name:PC_SETTINGS_WAS_UPDATED_NOTIFICATION object:nil];
     [self fetchUserSessions];
-    [self startFetchSessionsTimer];
+    NSNumber *boolNumber = [[NSUserDefaults standardUserDefaults] objectForKey:PCSendToServerPrefKey];
+    if(boolNumber.boolValue){
+        [self startFetchSessionsTimer];
+    }
+
 }
 
 #pragma mark - Timer logic
@@ -128,25 +140,20 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
 }
 
 - (void)sendUserSessionToServer {
-//    NSLog(@"%s", __PRETTY_FUNCTION__);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *postBody = [self.currentUserSession postDataAsDictionary];
     [manager POST:kUrlUpdateString parameters:postBody
           success:^(AFHTTPRequestOperation *operation, id responseObject){
- //             NSLog(@"success");
           }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
- //             NSLog(@"failure, error %@", error);
           }
      ];
 }
 
 - (void)fetchUserSessions {
-   // NSLog(@"%s", __PRETTY_FUNCTION__);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *group = @{@"group": self.currentUserSession.group};
     [manager GET:kUrlFetchString parameters:group
           success:^(AFHTTPRequestOperation *operation, id responseObject){
-     //         NSLog(@"success");
               self.sessions = nil;
               NSMutableArray *newSessions = [NSMutableArray new];
               NSArray *returnArray = (NSArray *)responseObject;
@@ -157,9 +164,7 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
               }
               self.sessions = [NSArray arrayWithArray:newSessions];
               [self.usersTable reloadData];
-       //       NSLog(@"number of sessions: %li", (unsigned long)[self.sessions count]);
           }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         //     NSLog(@"failure, error %@", error);
           }
      ];
 }
@@ -175,8 +180,16 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
     [self.startButton setHidden:YES];
     [self.pauseButton setHidden:NO];
     self.currentUserSession.status = PCSessionPomodoroStatusActive;
-    [self sendUserSessionToServer];
-    [self startTimers];
+    NSNumber *boolNumber = [[NSUserDefaults standardUserDefaults] objectForKey:PCSendToServerPrefKey];
+    if(! boolNumber.boolValue){
+        [self invalidatePomodoroTimerAndUpdateTimer];
+        self.pomodoroTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(updatePomodoriTimer) userInfo:nil repeats:YES];
+    } else {
+        [self sendUserSessionToServer];
+        [self startFetchSessionsTimer];
+        [self startTimers];
+    }
+
 }
 
 - (IBAction)pauseButtonTapped:(id)sender {
@@ -256,6 +269,13 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
     }
     self.currentUserSession.userName = userName;
     self.currentUserSession.group = groupName;
+    NSNumber *boolNumber = [[NSUserDefaults standardUserDefaults] objectForKey:PCSendToServerPrefKey];
+    if(! boolNumber.boolValue){
+        [self removeOldUserNameFromServer];
+        [self invalidateFetchSessionsTimer];
+        [self invalidateUpdateTimer];
+    }
+    
 }
 
 - (void)removeOldUserNameFromServer {
