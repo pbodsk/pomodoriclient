@@ -14,8 +14,8 @@
         <customObject id="-3" userLabel="Application"/>
         <menu title="AMainMenu" systemMenu="main" id="29">
             <items>
-                <menuItem title="PomodoriClient" id="56">
-                    <menu key="submenu" title="PomodoriClient" systemMenu="apple" id="57">
+                <menuItem title="Pomodori" id="56">
+                    <menu key="submenu" title="Pomodori" systemMenu="apple" id="57">
                         <items>
                             <menuItem title="About PomodoriClient" id="58">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -67,13 +67,13 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="File" id="5Uv-S6-A7s" userLabel="Menu Item - File">
+                <menuItem title="File" id="sQO-Fh-9CS">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="File" id="ek7-nM-q4t">
+                    <menu key="submenu" title="File" id="dnr-NM-Euh">
                         <items>
-                            <menuItem title="New Window" keyEquivalent="n" id="MLH-3b-ups">
+                            <menuItem title="New Window" keyEquivalent="n" id="EhE-nx-30E">
                                 <connections>
-                                    <action selector="openNewWindow:" target="494" id="G8R-tr-cvu"/>
+                                    <action selector="openNewWindow:" target="494" id="fsy-kj-NCg"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -93,7 +93,7 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="Pomodori Client" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371">
+        <window title="Pomodori" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="580" height="460"/>
@@ -149,7 +149,7 @@
                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="635">
                         <rect key="frame" x="20" y="20" width="540" height="195"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <clipView key="contentView" id="6DE-o4-1Rj">
+                        <clipView key="contentView" id="69e-2E-wCk">
                             <rect key="frame" x="1" y="17" width="538" height="177"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -208,7 +208,7 @@
                             <rect key="frame" x="1" y="178" width="538" height="16"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="639">
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="37" horizontal="NO" id="639">
                             <rect key="frame" x="224" y="17" width="15" height="102"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
@@ -234,7 +234,7 @@
         <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="626">
             <rect key="frame" x="0.0" y="0.0" width="240" height="135"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <clipView key="contentView" id="UY8-EH-fCk">
+            <clipView key="contentView" id="aXY-Ik-vbi">
                 <rect key="frame" x="1" y="17" width="238" height="117"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
@@ -280,7 +280,7 @@
                 <rect key="frame" x="1" y="119" width="223" height="15"/>
                 <autoresizingMask key="autoresizingMask"/>
             </scroller>
-            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="630">
+            <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="37" horizontal="NO" id="630">
                 <rect key="frame" x="224" y="17" width="15" height="102"/>
                 <autoresizingMask key="autoresizingMask"/>
             </scroller>
