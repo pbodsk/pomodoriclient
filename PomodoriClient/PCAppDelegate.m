@@ -42,6 +42,27 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
 #pragma mark - Application lifecycle methods
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+    [self.window setReleasedWhenClosed:false];
+    self.window.delegate = self;
+    [self handleInitialization];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    [self handleTermination];
+}
+
+- (void)windowWillClose:(NSNotification *)notification {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    [self handleTermination];
+}
+
+- (void)handleTermination {
+    [self invalidatePomodoroTimerAndUpdateTimer];
+    [self invalidateFetchSessionsTimer];
+    [self removeOldUserNameFromServer];
+}
+
+- (void)handleInitialization {
     self.sessions = [NSArray array];
     self.usersTable.delegate = self;
     self.usersTable.dataSource = self;
@@ -49,17 +70,12 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
     NSString *groupName = [[NSUserDefaults standardUserDefaults] objectForKey:PCGroupNamePrefKey];
     NSInteger remainingTimeInSeconds = [self remainingTimeInSecondsFromPreferences];
     self.currentUserSession = [[PCSession alloc]initWithUserName:userName status:PCSessionPomodoroStatusActive remainingTimeInSeconds:remainingTimeInSeconds group:groupName];
+    [self.startButton setHidden:NO];
     [self.pauseButton setHidden:YES];
     [self displayRemainingTime];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userSettingsWasUpdated) name:PC_SETTINGS_WAS_UPDATED_NOTIFICATION object:nil];
     [self fetchUserSessions];
     [self startFetchSessionsTimer];
-}
-
-- (void)applicationWillTerminate:(NSNotification *)notification {
-    [self invalidatePomodoroTimerAndUpdateTimer];
-    [self invalidateFetchSessionsTimer];
-    [self removeOldUserNameFromServer];
 }
 
 #pragma mark - Timer logic
@@ -223,6 +239,13 @@ static NSString *const kUrlRemoveString = @"http://limitless-island-2966.herokua
     }
     [self.preferenceWindowController showWindow:self];
 }
+
+- (IBAction)openNewWindow:(id)sender {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    [self.window makeKeyAndOrderFront:self];
+    [self handleInitialization];
+}
+
 
 #pragma mark - Prefence methods
 - (void)userSettingsWasUpdated {

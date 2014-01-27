@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PCAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate>
+@interface PCAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate, NSWindowDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSButton *startButton;
@@ -21,4 +21,5 @@
 - (IBAction)pauseButtonTapped:(id)sender;
 - (IBAction)resetButtonTapped:(id)sender;
 - (IBAction)showPreferencePanel:(id)sender;
+- (IBAction)openNewWindow:(id)sender;
 @end
